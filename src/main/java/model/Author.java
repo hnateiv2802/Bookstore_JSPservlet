@@ -68,6 +68,12 @@ public class Author {
 		Author other = (Author) obj;
 		return Objects.equals(authorCode, other.authorCode);
 	}
+
+	@Override
+	public String toString() {
+		return "Author [authorCode=" + authorCode + ", authorName=" + authorName + ", dateOfBirth=" + dateOfBirth
+				+ ", biography=" + biography + "]";
+	}
 	
 	
 }
