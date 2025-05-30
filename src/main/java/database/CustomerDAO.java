@@ -240,5 +240,36 @@ public class CustomerDAO implements DAOinteface<Customer>{
 
 		return result;
 	}
+	
+	
+	public boolean kiemTraTenDangNhap(String tenDangNhap) {
+		boolean result = false;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "SELECT * FROM customer WHERE tenDangNhap=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, tenDangNhap);
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery();
+
+			// Bước 4:
+			while (rs.next()) {
+				result = true;
+			}
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 
 }
