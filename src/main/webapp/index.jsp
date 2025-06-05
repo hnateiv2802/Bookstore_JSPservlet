@@ -1,3 +1,4 @@
+<%@page import="model.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -56,9 +57,26 @@
 					<input class="form-control me-2" type="search"
 						placeholder="Nội dung tìm kiếm" aria-label="Search">
 					<button class="btn btn-outline-success" type="submit">Tìm</button>
-					<a class="btn btn-primary" style="white-space: nowrap;" href="register.jsp">
-						Đăng ký
-					</a>
+					<%
+						Object obj = session.getAttribute("khachHang");
+						Customer khachHang = null;
+						if (obj!=null)
+							khachHang = (Customer)obj;
+						
+						if(khachHang==null){
+					%>
+						<a class="btn btn-primary" style="white-space: nowrap;" href="login.jsp">
+							Đăng nhập
+						</a>
+					<%} else { %>
+						<div class="row text-center" style="margin-left: 0.25em">
+							<div class="row"><b><%=khachHang.getCustomerLoginName() %></b></div>
+							<div class="row"><a style="white-space: nowrap;" href="logout">
+								Đăng xuất
+							</a>
+							</div>
+						</div>
+					<% } %>
 				</form>
 			</div>
 		</div>

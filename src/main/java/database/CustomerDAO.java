@@ -103,6 +103,52 @@ public class CustomerDAO implements DAOinteface<Customer>{
 		return result;
 	}
 
+	public Customer selectByUsernameAndPassword(Customer t) {
+		Customer result = null;
+		try {
+			// Bước 1: tạo kết nối đến CSDL
+			Connection con = JDBCUtil.getConnection();
+
+			// Bước 2: tạo ra đối tượng statement
+			String sql = "SELECT * FROM customer WHERE customercode=? AND password =?";
+			PreparedStatement st = con.prepareStatement(sql);
+			System.out.println(t.getCustomerLoginName()+"/"+t.getPassword());
+			st.setString(1, t.getCustomerLoginName());
+			st.setString(2, t.getPassword());
+
+			// Bước 3: thực thi câu lệnh SQL
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery();
+
+			// Bước 4:
+			while (rs.next()) {
+				String customerCode = rs.getString("customercode");
+				String customerLoginName = rs.getString("customerloginname");
+				String password = rs.getString("password");
+				String customerName = rs.getString("customername");
+				String sex = rs.getString("sex");
+				String address = rs.getString("address");
+				String deliveryAddress = rs.getString("deliveryaddress");
+				String purchaseAddress = rs.getString("purchaseaddress");
+				Date dateOfBirth = rs.getDate("dateofbirth");
+				String phoneNumber = rs.getString("phonenumber");
+				String email = rs.getString("email");
+				boolean signUpNewsletter = rs.getBoolean("signupnewsletter");
+
+				result = new Customer(customerCode, customerLoginName, password, customerName, sex, 
+							address, deliveryAddress, purchaseAddress, dateOfBirth, phoneNumber, email, signUpNewsletter);
+			}
+
+			// Bước 5:
+			JDBCUtil.closeConnection(con);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 	@Override
 	public int insert(Customer t) {
 		int result = 0;
